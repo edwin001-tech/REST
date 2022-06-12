@@ -1,11 +1,13 @@
 const express = require("express");
-const feedController = require("./feed");
+const feedController = require("../controllers/feed");
 
 const router = express.Router();
 
-//GET /feeds/posts
+//GET /feed/posts
 router.get('/posts', feedController.getPosts);
 
+//POST /feed/post
+router.post('/post', feedController.createPost);
 
 
 
@@ -16,4 +18,5 @@ router.get('/posts', feedController.getPosts);
 
 
 
-modules.exports = router;
+
+module.exports = router;
