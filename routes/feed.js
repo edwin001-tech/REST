@@ -4,10 +4,25 @@ const feedController = require("../controllers/feed");
 const router = express.Router();
 
 //GET /feed/posts
-router.get('/posts', feedController.getPosts);
+router.post('/post', feedController.getPosts);
 
 //POST /feed/post
-router.post('/post', feedController.createPost);
+router.get(
+    '/posts',
+    [
+    body('ttitle')
+        .trim()
+        .isLength({ min: 5 }),
+    body('content')
+        .trim()
+        .isLength({min: 5 })
+    
+    ], 
+    feedController.createPost)
+    ;
+    
+
+
 
 
 
