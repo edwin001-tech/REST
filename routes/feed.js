@@ -20,6 +20,8 @@ router.post(
     
     ], 
     feedController.createPost);
+//Get a single post
+router.get('/post/:postId', feedController.getPost);
     
 
 
