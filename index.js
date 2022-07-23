@@ -2,11 +2,37 @@ const express = require("express");
 const path = require('path');
 const feedRoutes = require("./routes/feed");
 const bodyParser = require("body-parser");
+//module for file upload and download
+const multer = require('multer');
+
 
 const mongoose = require('mongoose');
 
 const app = express();
 
+const fileStorage = multer.diskStorage({
+    destination: (req, res, cb) => {
+        cb(null, 'images');
+    },
+    filename: (req, res, cb) => {
+        cb(null, new Date().toISOString() + '-' + file.originalname);
+    }
+});
+
+const fileFilter = (req, file, cb) => {
+    if (
+        file.mimetype === 'image/png' ||
+        file.mimetype === 'image/jpg' ||
+        file.mimetype === 'image/jpeg'
+    ) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }        
+}
+app.use(
+    multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
+);
 app.use(bodyParser.json()); //parse json data
 //serve images folder statically, path.join- constructs an absolute path to the folder
 app.use('/images', express.static(path.join(__dirname, 'images'))); 
