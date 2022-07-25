@@ -14,7 +14,7 @@ router.post(
     body('title')
         .trim()
         .isLength({ min: 5 }),
-    body('content')
+    body('content')  
         .trim()
         .isLength({min: 5 })
     
@@ -22,6 +22,20 @@ router.post(
     feedController.createPost);
 //Get a single post
 router.get('/post/:postId', feedController.getPost);
+
+//Edit a single post
+router.put(
+    '/post/:postId',
+    [
+    body('title')
+        .trim()
+        .isLength({ min: 5 }),
+    body('content')  
+        .trim()
+        .isLength({min: 5 })
+    
+    ], 
+    feedController.updatePost);
     
 
 
