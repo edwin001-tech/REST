@@ -1,4 +1,6 @@
 const { validationResult } = require('express-validator/check');
+const fs = require('fs');
+const path = require('path'); 
 const Post = require('../models/post')
 exports.getPosts = (req, res, next) => {
     Post.find()
@@ -106,6 +108,10 @@ exports.updatePost = (req, res, next) => {
                 throw error
             }
 
+            if (imageUrl ==! post.imageUrl) {
+                clearImage(post.imageUrl);
+            }
+
             post.title = title; 
             post.imageUrl = imageUrl;
             post.content = content;
@@ -122,6 +128,11 @@ exports.updatePost = (req, res, next) => {
             }
             next(err);
         });
+
+        const clearImage = filePath => {
+            filePath = path.join(__dirname, "..", filePath);
+            fs.unlink = (filePath, err => console.log(err));
+        }
 
 
 
