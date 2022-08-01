@@ -10,11 +10,12 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+//control where the files gets stored
 const fileStorage = multer.diskStorage({
-    destination: (req, res, cb) => {
+    destination: (req, file, cb) => {
         cb(null, 'images');
     },
-    filename: (req, res, cb) => {
+    filename: (req, file, cb) => {
         cb(null, new Date().toISOString() + '-' + file.originalname);
     }
 });
