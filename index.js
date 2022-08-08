@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require('path');
 const feedRoutes = require("./routes/feed");
+const authRoutes = require('./routes/auth');
 const bodyParser = require("body-parser");
 //module for file upload and download
 const multer = require('multer');
@@ -47,6 +48,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/feed', feedRoutes);
+app.use('/signup', authRoutes);
 
 //error handling middleware
 app.use((error, req, res, next) => {
