@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/feed', feedRoutes);
-app.use('/signup', authRoutes);
+app.use('/auth', authRoutes);
 
 //error handling middleware
 app.use((error, req, res, next) => {
