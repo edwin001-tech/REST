@@ -1,4 +1,3 @@
-const { validationResult } = require('express-validator/check');
 const fs = require('fs');
 const path = require('path'); 
 const Post = require('../models/post')
