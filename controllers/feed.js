@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path'); 
-const Post = require('../models/post')
+const Post = require('../models/post');
+const User = require('../models/user');
+
 exports.getPosts = (req, res, next) => {
     const currentPage = req.query.page || 1;
     const perPage = 2;
@@ -48,21 +50,37 @@ exports.createPost = (req, res, next) => {
     const imageUrl = req.file.path;
     const title = req.body.title;
     const content = req.body.content;
+    let creator;
     const post = new Post({
         title: title,
         content: content,
         imageUrl: imageUrl,
-        creator: { name: 'Edwin' }
+        creator: req.userId
 
     });
-    post.save()
+    post
+        .save()
         .then(result => {
-        console.log(result);
-        res.status(201).json({
-         message: 'post created successfully!',
-         post: result
-        });  
-      })
+            //add post to the list of posts for a given user
+            return User.findById(req.userId); //get currently logged in user
+        })
+        //get user that was created
+        .then(user => {
+            creator = user;
+            //access user posts and push the currently created post to that user
+            user.posts.push(post);
+            //because we are updating
+            return user.save();
+       
+        })
+        .then(result => {
+             res.status(201).json({
+              message: 'post created successfully!',
+                 post: post,
+              creator: { _id: creator._id, name: creator.name}
+             });
+        
+        })
         .catch(err => {
             if (!err.statusCode) {
                 err.statusCode = 500;
