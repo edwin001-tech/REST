@@ -4,7 +4,7 @@ const router = express.Router();
 
 const authController = require('../controllers/auth');
 
-//route validation logic 
+//signup validation logic 
 router.put('/signup', [
     body('email')
         .isEmail()
