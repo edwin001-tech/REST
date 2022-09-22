@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 //extract token from frontend/client
 module.exports = (req, res, next) => {
-    const authHeader = req.get('Authorization');
+    const authHeader = req.get('');
     if (!authHeader) {
         const error = new Error('Not Authenticated');
         error.statusCode = 401;
