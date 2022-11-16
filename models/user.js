@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
